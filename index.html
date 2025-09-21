@@ -71,7 +71,7 @@
 
         <div class="nav-links">
             <a href="/projects/">Projects</a>
-            <a href="/login.html">Login</a>
+            <a href="/login.html" id="loginBtn">Login</a>
             <a href="#" id="logoutBtn" onclick="logout()" class="logout-btn" style="display: none;">Logout</a>
         </div>
     </div>
@@ -82,15 +82,18 @@
         function updateAuthStatus() {
             const authStatusDiv = document.getElementById('authStatus');
             const logoutBtn = document.getElementById('logoutBtn');
+            const loginBtn = document.getElementById('loginBtn');
 
             if (isAuthenticated()) {
                 authStatusDiv.className = 'auth-status authenticated';
                 authStatusDiv.textContent = '✅ You are authenticated and can access the projects directory';
                 logoutBtn.style.display = 'inline-block';
+                loginBtn.style.display = 'none';
             } else {
                 authStatusDiv.className = 'auth-status not-authenticated';
                 authStatusDiv.textContent = '🔒 You need to login to access the projects directory';
                 logoutBtn.style.display = 'none';
+                loginBtn.style.display = 'inline-block';
             }
         }
 
