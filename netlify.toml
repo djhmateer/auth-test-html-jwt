@@ -7,7 +7,11 @@
 # Configure Edge Functions
 [[edge_functions]]
   function = "auth-middleware"
-  path = ["/projects/*", "/projects"]
+  path = "/projects/*"
+
+[[edge_functions]]
+  function = "auth-middleware"
+  path = "/projects"
 
 # Environment variables for local development
 [context.dev.environment]

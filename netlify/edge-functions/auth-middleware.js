@@ -81,7 +81,4 @@ export default async (request, context) => {
 };
 
 
-// Configuration for which paths this edge function should run on
-export const config = {
-  path: ["/projects/*", "/projects"]
-};
+// Configuration is handled in netlify.toml
