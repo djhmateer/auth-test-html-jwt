@@ -1,0 +1,20 @@
+{
+  "name": "auth-test-html-jwt",
+  "version": "1.0.0",
+  "description": "JWT authentication test with HTML and Netlify Functions",
+  "main": "index.js",
+  "scripts": {
+    "build": "echo 'No build step required'"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^9.0.2"
+  },
+  "keywords": [
+    "jwt",
+    "authentication",
+    "netlify",
+    "serverless"
+  ],
+  "author": "",
+  "license": "MIT"
+}
