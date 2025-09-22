@@ -135,7 +135,7 @@ function generateProtectedContent() {
 exports.handler = async (event, context) => {
   console.log('=== PROTECTED FUNCTION START ===');
   console.log('HTTP Method:', event.httpMethod);
-  console.log('Headers:', JSON.stringify(event.headers, null, 2));
+  // console.log('Headers:', JSON.stringify(event.headers, null, 2));
   console.log('Environment variables available:', {
     JWT_SECRET: process.env.JWT_SECRET ? '[PRESENT]' : '[MISSING]'
   });
