@@ -7,7 +7,6 @@
     "build": "echo 'No build step required'"
   },
   "dependencies": {
-    "jsonwebtoken": "^9.0.2"
   },
   "keywords": [
     "jwt",
