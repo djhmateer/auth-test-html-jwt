@@ -20,9 +20,12 @@ function parseCookies(cookieHeader) {
 // Helper function to verify JWT
 function verifyToken(token) {
   try {
+    console.log('Attempting to verify JWT with secret (first 10 chars):', JWT_SECRET.substring(0, 10) + '...');
     const decoded = jwt.verify(token, JWT_SECRET);
+    console.log('JWT verification successful');
     return { valid: true, payload: decoded };
   } catch (error) {
+    console.log('JWT verification failed:', error.message);
     return { valid: false, error: error.message };
   }
 }
@@ -130,13 +133,31 @@ function generateProtectedContent() {
 }
 
 exports.handler = async (event, context) => {
+  console.log('=== PROTECTED FUNCTION START ===');
+  console.log('HTTP Method:', event.httpMethod);
+  console.log('Headers:', JSON.stringify(event.headers, null, 2));
+  console.log('Environment variables available:', {
+    JWT_SECRET: process.env.JWT_SECRET ? '[PRESENT]' : '[MISSING]'
+  });
+
   try {
     // Parse cookies from request
-    const cookies = parseCookies(event.headers.cookie);
+    const cookieHeader = event.headers.cookie || event.headers.Cookie || '';
+    console.log('Raw cookie header:', cookieHeader);
+
+    const cookies = parseCookies(cookieHeader);
+    console.log('Parsed cookies:', Object.keys(cookies).map(key => `${key}: [${cookies[key] ? 'PRESENT' : 'MISSING'}]`));
+
     const authToken = cookies.authToken;
+    console.log('Auth token found:', authToken ? '[PRESENT]' : '[MISSING]');
+    if (authToken) {
+      console.log('Auth token (first 20 chars):', authToken.substring(0, 20) + '...');
+      console.log('Auth token length:', authToken.length);
+    }
 
     // Check if token exists
     if (!authToken) {
+      console.log('❌ No auth token found - redirecting to login');
       return {
         statusCode: 302,
         headers: {
@@ -147,10 +168,29 @@ exports.handler = async (event, context) => {
     }
 
     // Verify JWT token
+    console.log('🔍 Verifying JWT token...');
     const tokenResult = verifyToken(authToken);
+    console.log('Token verification result:', {
+      valid: tokenResult.valid,
+      error: tokenResult.error || 'none'
+    });
+
+    if (tokenResult.valid && tokenResult.payload) {
+      console.log('✅ Token payload:', JSON.stringify(tokenResult.payload, null, 2));
+      const now = Math.floor(Date.now() / 1000);
+      if (tokenResult.payload.exp) {
+        const timeToExpiry = tokenResult.payload.exp - now;
+        console.log('Token expires in:', timeToExpiry, 'seconds');
+        console.log('Token expiry date:', new Date(tokenResult.payload.exp * 1000).toISOString());
+      }
+      if (tokenResult.payload.iat) {
+        console.log('Token issued at:', new Date(tokenResult.payload.iat * 1000).toISOString());
+      }
+    }
 
     if (!tokenResult.valid) {
-      // Invalid or expired token - clear cookie and redirect to login
+      console.log('❌ Invalid or expired token - clearing cookie and redirecting to login');
+      console.log('Token error details:', tokenResult.error);
       return {
         statusCode: 302,
         headers: {
@@ -162,6 +202,7 @@ exports.handler = async (event, context) => {
     }
 
     // Token is valid - return protected content
+    console.log('✅ Token validation successful - serving protected content');
     return {
       statusCode: 200,
       headers: {
@@ -172,7 +213,8 @@ exports.handler = async (event, context) => {
     };
 
   } catch (error) {
-    console.error('Protected route error:', error);
+    console.error('❌ PROTECTED ROUTE ERROR:', error);
+    console.error('Error stack:', error.stack);
 
     return {
       statusCode: 500,
