@@ -1,21 +1,5 @@
-#[build]
-#  functions = "netlify/functions"
-
-#[dev]
-#  functions = "netlify/functions"
-
 # Redirect /projects to the protected function
-[[redirects]]
+[redirects]
   from = "/projects"
   to = "/.netlify/functions/protected"
   status = 200
-
-# Environment variables for local development
-#[context.dev.environment]
-#  JWT_SECRET = "auth-test-secret-key-netlify-dev"
-#  AUTH_PASSWORD = "1"
-
-# Environment variables for production
-#[context.production.environment]
-#  JWT_SECRET = "your-super-secret-jwt-key-change-this-in-production"
-#  AUTH_PASSWORD = "1"
