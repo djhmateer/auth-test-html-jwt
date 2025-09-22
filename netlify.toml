@@ -1,8 +1,8 @@
-[build]
-  functions = "netlify/functions"
+#[build]
+#  functions = "netlify/functions"
 
-[dev]
-  functions = "netlify/functions"
+#[dev]
+#  functions = "netlify/functions"
 
 # Redirect /projects to the protected function
 [[redirects]]
