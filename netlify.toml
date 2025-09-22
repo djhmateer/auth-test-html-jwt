@@ -1,5 +1,5 @@
 # Redirect /projects to the protected function
-[redirects]
+[[redirects]]
   from = "/projects"
   to = "/.netlify/functions/protected"
   status = 200
