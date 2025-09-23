@@ -68,11 +68,11 @@
         <p><em>This static HTML file is protected by Netlify Edge Functions running as middleware.</em></p>
 
         <div>
-            <a href="/">Back to Home</a> |
-            <a href="/login.html" id="login-btn">Login</a>
-            <form class="logout-form" method="POST" action="/.netlify/functions/logout" id="logout-form" style="display: inline-block;">
-                | <button type="submit" class="logout-btn">Logout</button>
+            <a href="/">Back to Home</a>
+            <form class="logout-form" method="POST" action="/.netlify/functions/logout" id="logout-form" style="display: none;">
+                <button type="submit" class="logout-btn">Logout</button>
             </form>
+
         </div>
     </div>
 
