@@ -44,6 +44,23 @@
         .nav-links a:hover {
             background-color: #0056b3;
         }
+        .logout-form {
+            display: inline-block;
+            margin: 10px;
+        }
+        .logout-btn {
+            padding: 12px 24px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        .logout-btn:hover {
+            background-color: #c82333;
+        }
         .info-box {
             background-color: #e7f3ff;
             border: 1px solid #b3d7ff;
@@ -71,8 +88,10 @@
 
         <div class="nav-links">
             <a href="/projects">Projects</a>
-            <a href="/.netlify/functions/protected">/.netlify/functions/protected</a>
             <a href="/login.html">Login</a>
+            <form class="logout-form" method="POST" action="/.netlify/functions/logout">
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
         </div>
 
     </div>
