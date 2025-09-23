@@ -69,11 +69,42 @@
 
         <div>
             <a href="/">Back to Home</a> |
-            <a href="/login.html">Login</a> |
-            <form class="logout-form" method="POST" action="/.netlify/functions/logout">
-                <button type="submit" class="logout-btn">Logout</button>
+            <a href="/login.html" id="login-btn">Login</a>
+            <form class="logout-form" method="POST" action="/.netlify/functions/logout" id="logout-form" style="display: inline-block;">
+                | <button type="submit" class="logout-btn">Logout</button>
             </form>
         </div>
     </div>
+
+    <script>
+        // Check for JWT token in cookies
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        // Show/hide login/logout buttons based on authentication status
+        function updateAuthButtons() {
+            const token = getCookie('auth-token');
+            const loginBtn = document.getElementById('login-btn');
+            const logoutForm = document.getElementById('logout-form');
+
+            if (token) {
+                // User is logged in - since we're on protected page, they must be logged in
+                // Hide login button, show logout button
+                loginBtn.style.display = 'none';
+                logoutForm.style.display = 'inline-block';
+            } else {
+                // User is logged out - this shouldn't happen on protected page
+                // but just in case, show login and hide logout
+                loginBtn.style.display = 'inline';
+                logoutForm.style.display = 'none';
+            }
+        }
+
+        // Run on page load
+        updateAuthButtons();
+    </script>
 </body>
 </html>
