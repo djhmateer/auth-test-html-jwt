@@ -86,24 +86,35 @@
 
         // Show/hide login/logout buttons based on authentication status
         function updateAuthButtons() {
+            console.log('=== PROJECTS AUTH BUTTON UPDATE DEBUG ===');
+            console.log('All cookies:', document.cookie);
+
             const token = getCookie('authToken');
+            console.log('Token found:', token ? 'YES' : 'NO');
+            console.log('Token value:', token);
+
             const loginBtn = document.getElementById('login-btn');
             const logoutForm = document.getElementById('logout-form');
 
+            console.log('Login button element:', loginBtn);
+            console.log('Logout form element:', logoutForm);
+
             if (token) {
-                // User is logged in - since we're on protected page, they must be logged in
-                // Hide login button, show logout button
+                console.log('✅ User is logged in - hiding login, showing logout');
                 loginBtn.style.display = 'none';
                 logoutForm.style.display = 'inline-block';
             } else {
-                // User is logged out - this shouldn't happen on protected page
-                // but just in case, show login and hide logout
+                console.log('❌ User is logged out - showing login, hiding logout');
                 loginBtn.style.display = 'inline';
                 logoutForm.style.display = 'none';
             }
+
+            console.log('Final login button display:', loginBtn.style.display);
+            console.log('Final logout form display:', logoutForm.style.display);
         }
 
         // Run on page load
+        console.log('Projects page loaded, updating auth buttons...');
         updateAuthButtons();
     </script>
 </body>
